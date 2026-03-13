@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claudio Giordani - Executive CV</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            --card-bg: #ffffff;
+            --accent: #0984e3;
+            --border: #dfe6e9;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
+            --border: #334155;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .theme-switch-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            z-index: 100;
+            background: var(--card-bg);
+            padding: 8px 15px;
+            border-radius: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+        }
+        .theme-switch { display: none; }
+        .theme-switch-label {
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: var(--text-main);
+            user-select: none;
+        }
+
+        .dashboard {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 40px;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 60px;
+            height: fit-content;
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            transition: background-color 0.3s, border-color 0.3s;
+            margin-bottom: 20px;
+        }
+
+        h1 { margin: 0 0 5px 0; font-size: 2.2em; line-height: 1.1; color: var(--text-main); }
+        .title { color: var(--accent); font-weight: 600; font-size: 1.1em; margin-bottom: 20px; }
+        
+        .contact-list { list-style: none; padding: 0; margin: 0 0 20px 0; color: var(--text-muted); font-size: 0.95em; }
+        .contact-list li { margin-bottom: 10px; }
+        .contact-list a { color: var(--accent); text-decoration: none; font-weight: 500; }
+        .contact-list a:hover { text-decoration: underline; }
+
+        .skills-section h3 { margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 5px; color: var(--text-main); }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag { background: var(--bg-color); color: var(--text-main); padding: 5px 12px; border-radius: 8px; font-size: 0.85em; border: 1px solid var(--border); }
+
+        h2 { color: var(--text-main); font-size: 1.8em; margin-top: 40px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        h2:first-child { margin-top: 0; }
+        
+        .intro-text { font-size: 1.05em; margin-bottom: 40px; color: var(--text-muted); }
+
+        details {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: all 0.3s;
+        }
+        
+        details:hover { border-color: var(--accent); box-shadow: 0 6px 12px rgba(0,0,0,0.05); }
+
+        summary {
+            padding: 20px;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+        summary::-webkit-details-marker { display: none; }
+        
+        .job-meta { display: flex; flex-direction: column; flex-grow: 1; }
+        .job-title { font-size: 1.2em; color: var(--text-main); }
+        .job-date { font-size: 0.9em; color: var(--text-muted); font-weight: 400; margin-top: 4px; }
+        
+        .job-logo {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: #fff;
+            padding: 4px;
+            margin-left: 15px;
+            margin-right: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        summary::after {
+            content: '+';
+            font-size: 1.5em;
+            color: var(--accent);
+            background: var(--bg-color);
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+        details[open] summary::after { content: '−'; transform: rotate(180deg); }
+
+        .details-content { padding: 0 20px 20px 20px; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 10px; padding-top: 15px; }
+        .details-content ul { padding-left: 20px; margin-top: 10px; }
+        .details-content li { margin-bottom: 8px; }
+        .details-content strong { color: var(--text-main); }
+
+        @media (max-width: 900px) {
+            .dashboard { grid-template-columns: 1fr; margin-top: 80px; }
+            .sidebar { position: relative; top: 0; }
+        }
+        
+        @media (max-width: 600px) {
+            .job-logo { display: none; }
+        }
+
+        @media print {
+            body { background: #fff; color: #000; display: block; }
+            .theme-switch-wrapper { display: none; }
+            .dashboard { display: block; margin: 0; padding: 0; }
+            .profile-card { box-shadow: none; border: none; padding: 0; margin-bottom: 30px; }
+            details { border: none; box-shadow: none; margin-bottom: 15px; page-break-inside: avoid; }
+            details[open] summary::after, summary::after { display: none; }
+            .details-content { display: block !important; border-top: none; padding: 0; margin-top: 0; }
+            summary { padding: 0 0 5px 0; border-bottom: 2px solid #ccc; margin-bottom: 10px; pointer-events: none; }
+            .job-date { text-align: left; margin-top: 2px; }
+            .job-logo { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch-label" for="theme-switch">
+            <input type="checkbox" id="theme-switch" class="theme-switch">
+            🌓 Toggle Dark Mode
+        </label>
+    </div>
+
+    <div class="dashboard">
+        
+        <div class="sidebar">
+            <div class="profile-card">
+                <h1>Claudio Giordani</h1>
+                <div class="title">Chief Marketing Officer | Global Innovation Leader | Ex-Google | Ex-BetterUp</div>
+                
+                <ul class="contact-list">
+                    <li>📍 Milan, IT</li>
+                    <li>📧 giordaniclaud@gmail.com</li>
+                    <li>📱 +39 3394249482</li>
+                    <li>🔗 <a href="https://www.linkedin.com/in/claudiogiordani/" target="_blank">LinkedIn Profile</a></li>
+                </ul>
+
+                <div class="skills-section">
+                    <h3>Languages</h3>
+                    <div class="skill-tags">
+                        <span class="tag">English (Fluent)</span>
+                        <span class="tag">Italian (Native)</span>
+                        <span class="tag">Spanish (Proficient (DELE))</span>
+                        <span class="tag">Portuguese (Advanced)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            
+            <h2>Profile</h2>
+            <p class="intro-text">Proven go-to-market leader in transforming marketing strategies into substantial revenue growth. With 18 years of experience driving adoption, revenue, and shareholder value at publicly traded companies and tech/SaaS scale-ups, I have a track record of overachieving targets and acting as a strategic partner to sales leadership. My expertise spans international marketing, product, brand & channel marketing, and advanced digital marketing. I am a creative and adaptable manager with strong leadership experience, inspiring diverse, distributed global teams through a structured, data-driven management style.</p>
+
+            <h2>Professional Experience</h2>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">CMO, LianeCare</span>
+                        <span class="job-date">09/2024 - Present | Milan, IT</span>
+                    </div>
+                    <img class="job-logo" src="https://www.google.com/s2/favicons?domain=lianecare.com&sz=128" alt="LianeCare Logo">
+                </summary>
+                <div class="details-content">
+                    <p>Owner of marketing strategies driving brand visibility, user engagement, and market leadership in the corporate welfare sector. Focused on innovation and measurable outcomes, I lead initiatives that balance scalable growth with long-term brand equity.</p>
+                    <ul>
+                        <li><strong>Strategic Growth:</strong> Spearheaded the go-to-market strategy for the corporate welfare sector, balancing scalable user acquisition with long-term brand equity.</li>
+                        <li><strong>Team Leadership:</strong> Built and currently mentor a high-performing team of 5, establishing a culture of "measurable outcomes" and fostering alignment between product and sales departments.</li>
+                        <li><strong>Brand Authority:</strong> Elevated LianeCare's presence through targeted campaigns that position the company as the industry leader in well-being, directly resulting in increased organic traffic and improved brand favorability metrics.</li>
+                        <li><strong>Operational Efficiency:</strong> Optimized marketing operations to achieve high ROI on cost-effective campaigns, boosting user loyalty while maintaining sustainable growth.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Board member and Marketing Advisor, Userbot</span>
+                        <span class="job-date">06/2021 - Present | Milan, IT</span>
+                    </div>
+                    <img class="job-logo" src="https://www.google.com/s2/favicons?domain=userbot.ai&sz=128" alt="Userbot Logo">
+                </summary>
+                <div class="details-content">
+                    <ul>
+                        <li>Advising the founder on Series A fundraising positioning and B2B product-market fit.</li>
+                    </ul>
+                </div>
+            </details>
+
+         <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Lecturer of Marketing, John Cabot University and American University of Rome (AUR)</span>
+                        <span class="job-date">01/2024 - 12/2024 | Rome, IT</span>
+                    </div>
+                    <img class="job-logo" src="https://www.clipartkey.com/mpngs/m/45-450565_logo-john-cabot-university.png" alt="John Cabot Logo">
+                </summary>
+                <div class="details-content">
+                    <ul>
+                        <li>Teaching marketing principles, sharing real-world insights from 18 years in top-tier tech companies.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Head of Marketing / Senior Marketing Leadership, BetterUp</span>
+                        <span class="job-date">02/2022 - 12/2023 | San Francisco, USA</span>
+                    </div>
+                    <img class="job-logo" src="https://www.google.com/s2/favicons?domain=betterup.com&sz=128" alt="BetterUp Logo">
+                </summary>
+                <div class="details-content">
+                    <p>Owner of the international marketing strategy and execution for BetterUp, leading the go-to-market plan and marketing function for global expansion. Balanced growth across B2C and B2B markets while bringing BetterUp's product and message to market, fostering brand equity and growth.</p>
+                    <ul>
+                        <li><strong>Market expansion:</strong> Developed and executed the international GTM strategy, ensuring growth objectives were consistently met and a cohesive voice across a multi-cultural environment.</li>
+                        <li><strong>Team management:</strong> Coordinated and mentored a distributed workforce to maintain agility and strategic alignment</li>
+                        <li><strong>Demand generation:</strong> Built a pipeline growth strategy, executing region-wide and country-specific campaigns to maximize impact.</li>
+                        <li><strong>Operational excellence:</strong> Optimized marketing processes, including web presence, regional influencers, SEO, nurture campaigns, and marketing technology and automation systems.</li>
+                        <li><strong>KPI Achievement:</strong> Consistently exceeded pipeline goals by 155% and brand awareness targets by 150% through rigorous benchmarking against competitors. Managed an 8-figure budget.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Head of International Marketing - Google Assistant, Google</span>
+                        <span class="job-date">10/2017 - 01/2022 | San Francisco, USA</span>
+                    </div>
+                    <img class="job-logo" src="https://www.google.com/s2/favicons?domain=google.com&sz=128" alt="Google Logo">
+                </summary>
+                <div class="details-content">
+                    <p>Led the marketing efforts for internationalizing the Google Assistant in the fastest global expansion of a product in Google's history - Managed the product marketing strategy and the operations for the launch of a customized Google Assistant in +130 markets and +40 new languages to drive awareness, adoption and growth across users globally.</p>
+                    <ul>
+                        <li><strong>Career progression:</strong> Promoted to design and oversee all Google Assistant initiatives to support and enhance Diversity, Equity and Inclusion (dual role). Built and led the internationalization team (35 distributed people).</li>
+                        <li><strong>Campaign Execution:</strong> Orchestrated +50 complex, multi-channel global campaigns that increased brand favorability and awareness in key international markets to grow an engaged user base. Designed processes, communication and product development strategies to increase market fit.</li>
+                        <li><strong>KPI Achievement:</strong> Global DAUs grew 100x (to achieve 1B active users) and non-US markets grew to contribute from 0% to 70% of user base.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Head of B2B Marketing & YouTube Marketing Lead, Google</span>
+                        <span class="job-date">01/2015 - 10/2017 | Milan, IT</span>
+                    </div>
+                    <img class="job-logo" src="https://www.google.com/s2/favicons?domain=google.com&sz=128" alt="Google Logo">
+                </summary>
+                <div class="details-content">
+                    <p>Orchestrated and led Google's outreach for B2B marketing strategies; designing campaigns and communication projects across all of Google advertising solutions (+$15M budget, 5 reports).</p>
+                    <ul>
+                        <li>International and cross functional project coordination. Responsible for business performance (co-owned with sales), content operations, user growth & insights, marketing and partnerships.</li>
+                        <li>Led long-term marketing strategies to sustain sales activity, (incl. B2B and B2C campaigns, websites, narratives and collateral development, events and digital activations) and designed processes as well as OKRs for the team.</li>
+                        <li><strong>KPI Achievement:</strong> Clients' investments increased by 2x in 4 years (+20% vs. the control group).</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Strategy and Marketing Operations Manager, Google</span>
+                        <span class="job-date">10/2012 - 12/2014 | Milan, IT</span>
+                    </div>
+                    <img class="job-logo" src="https://www.google.com/s2/favicons?domain=google.com&sz=128" alt="Google Logo">
+                </summary>
+                <div class="details-content">
+                    <ul>
+                        <li>Led Google's outreach for advertising offerings and education strategies to Large Advertisers and Agencies (+$1.5M budget, 2 direct reports).</li>
+                        <li>Synthesized complex datasets to drive strategic decision-making and optimize resource allocation.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Senior Strategy and Innovation Consultant, Europraxis Consulting (Now: Indra)</span>
+                        <span class="job-date">01/2011 - 09/2012 | Milan, IT & Madrid/Barcelona, ES</span>
+                    </div>
+                    <img class="job-logo" src="https://www.google.com/s2/favicons?domain=indracompany.com&sz=128" alt="Indra Logo">
+                </summary>
+                <div class="details-content">
+                    <ul>
+                        <li>Successfully delivered strategic consultancy across different sectors (IT, advertising, FMCG, Financial Services, SaaS solutions, Telecom & Media, Energy), focusing on business development, operations excellence, marketing strategies, CRM, and market/competition analysis.</li>
+                    </ul>
+                </div>
+            </details>
+
+           <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Senior Strategy Consultant, Invetta Partners</span>
+                        <span class="job-date">01/2009 - 12/2010 | Varese, IT</span>
+                    </div>
+                    <img class="job-logo" src="https://ui-avatars.com/api/?name=Invetta+Partners&background=0a3d62&color=fff&size=256&bold=true" alt="Invetta Logo">
+                </summary>
+                <div class="details-content">
+                    <ul>
+                        <li>Led strategic consultancy and innovation projects for SMEs, focusing on business development, international marketing, internationalization, business analysis, R&D and innovation related projects.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Strategy Consultant, Ernst & Young</span>
+                        <span class="job-date">01/2008 - 12/2008 | Milan, IT</span>
+                    </div>
+                    <img class="job-logo" src="https://www.google.com/s2/favicons?domain=ey.com&sz=128" alt="EY Logo">
+                </summary>
+                <div class="details-content">
+                    <ul>
+                        <li>Leveraged strategic agility and rapid problem-solving to deliver critical strategic and operational consulting solutions in dynamic, client-facing environments across diverse industries.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Business Analyst - Management consulting (Intern), Accenture</span>
+                        <span class="job-date">01/2005 - 07/2005 | Milan, IT</span>
+                    </div>
+                    <img class="job-logo" src="https://www.google.com/s2/favicons?domain=accenture.com&sz=128" alt="Accenture Logo">
+                </summary>
+            </details>
+
+            <h2>Education</h2>
+            
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Executive Program, Singularity University</span>
+                        <span class="job-date">2017 | Santa Clara, USA</span>
+                    </div>
+                    <img class="job-logo" src="https://www.google.com/s2/favicons?domain=su.org&sz=128" alt="Singularity University Logo">
+                </summary>
+                <div class="details-content">
+                    <p>A leadership innovation program focused on how key converging technologies will shape our future; exploring the impact of exponential technologies on users and companies in a world of rapid change.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Marketing Academy Post-Grad, The Wharton School - University of Pennsylvania</span>
+                        <span class="job-date">2014 | Philadelphia, USA</span>
+                    </div>
+                    <img class="job-logo" src="https://www.google.com/s2/favicons?domain=upenn.edu&sz=128" alt="Wharton Logo">
+                </summary>
+            </details>
+
+        <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Master of Science in International Markets and New Technologies (CLEMIT), Università Commerciale Luigi Bocconi</span>
+                        <span class="job-date">2008 | Milan, IT</span>
+                    </div>
+                    <img class="job-logo" src="https://images.seeklogo.com/logo-png/46/1/bocconi-university-logo-png_seeklogo-463777.png" alt="Bocconi Logo">
+                </summary>
+                <div class="details-content">
+                    <ul>
+                        <li>Graduated with full grades.</li>
+                        <li>Exchange program: Universidade Getulio Vargas (FGV), Sao Paulo, Brazil - 2007.</li>
+                    </ul>
+                </div>
+            </details>
+
+           <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Bachelor of Science in International Economics and Management, Università Commerciale Luigi Bocconi</span>
+                        <span class="job-date">2005 | Milan, IT</span>
+                    </div>
+                    <img class="job-logo" src="https://images.seeklogo.com/logo-png/46/1/bocconi-university-logo-png_seeklogo-463777.png" alt="Bocconi Logo">
+                </summary>
+                <div class="details-content">
+                    <ul>
+                        <li>Graduated with full grades.</li>
+                        <li>Exchange program: ITAM University, Instituto Técnico Autónomo de México, Mexico - 2004.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Google ads certifications</span>
+                    </div>
+                    <img class="job-logo" src="https://www.google.com/s2/favicons?domain=google.com&sz=128" alt="Google Logo">
+                </summary>
+                <div class="details-content">
+                    <ul>
+                        <li>i) Google Ads Fundamentals, ii) Search Advertising, iii) Video Advertising, iv) Mobile Advertising, v) Display Advertising, vi) Shopping Advertising.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <h2>Skills</h2>
+            
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Leadership and analytical skills</span>
+                    </div>
+                </summary>
+                <div class="details-content">
+                    <p>Large, distributed teams management; driving clarity in complex, fast-paced environments. Strong analytical reasoning and problem solving. Mentor at Leadthefuture.tech.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Digital marketing and computer skills</span>
+                    </div>
+                </summary>
+                <div class="details-content">
+                    <ul>
+                        <li><strong>Growth & Performance:</strong> User Acquisition, CRM (Salesforce/ HubSpot), SEO/SEM, Revenue Growth, Data Analysis (AI, SQL, Python).</li>
+                        <li><strong>Tech Stack:</strong> SEMrush, Google Analytics, SPSS.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Interpersonal Skills</span>
+                    </div>
+                </summary>
+                <div class="details-content">
+                    <p>Matrixed global teams management and complex cross-functional coordination. Onboarding and partner relationship management. Excellent communication capabilities.</p>
+                </div>
+            </details>
+
+            <h2>Interests</h2>
+            
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Creativity, Cinema, and Art</span>
+                    </div>
+                </summary>
+                <div class="details-content">
+                    <p>Judge of the Cannes Lions 2016, co-creator of the IF festival.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Continuous Learning, Philosophy and Psychology</span>
+                    </div>
+                </summary>
+                <div class="details-content">
+                    <p>Università Statale di Milano - Bachelor degree in Philosophy.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Artificial Intelligence and Technology</span>
+                    </div>
+                </summary>
+            </details>
+
+            <details>
+                <summary>
+                    <div class="job-meta">
+                        <span class="job-title">Volunteering</span>
+                    </div>
+                </summary>
+            </details>
+
+        </div>
+    </div>
+
+    <script>
+        const toggleSwitch = document.querySelector('#theme-switch');
+        
+        toggleSwitch.addEventListener('change', function(e) {
+            if (e.target.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        });
+
+        window.addEventListener('beforeprint', () => {
+            document.querySelectorAll('details').forEach(detail => detail.setAttribute('open', 'true'));
+        });
+    </script>
+</body>
+</html>
